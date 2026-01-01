@@ -2,6 +2,7 @@ import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { AuthProvider } from "./store/AuthContext";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { PrivateRoute } from "./guards/AuthGuard";
+import Login from "./features/auth/login.jsx";
 
 const theme = createTheme({
   palette: {
@@ -18,7 +19,7 @@ const App = () => {
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/login" element={<p>Login</p>} />
+            <Route path="/login" element={<Login />} />
             <Route
               path="/"
               element={
