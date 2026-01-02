@@ -1,6 +1,6 @@
-import { schema, model } from "mongoose"
+import { Schema, model } from "mongoose"
 
-const UserSchema = new schema({
+const UserSchema = new Schema({
     username: { type: String, required: true, unique: true, trim: true },
     password: { type: String, required: true },
     role: { type: String, enum: ['employee', 'admin'], default: 'employee' }

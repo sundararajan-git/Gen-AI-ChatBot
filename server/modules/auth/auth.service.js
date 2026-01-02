@@ -26,7 +26,7 @@ export const registerUserService = async ({ username, password, role }) => {
 export const loginUserService = async ({ username, password }) => {
     const user = await User.findOne({ username });
 
-    const correctPassword = await bcrypt.compare(enteredPassword, this.password);
+    const correctPassword = await bcrypt.compare(password, user.password);
 
     if (!user || !correctPassword) {
         throw new Error('Invalid username or password');

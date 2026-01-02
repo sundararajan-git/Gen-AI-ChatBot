@@ -1,5 +1,5 @@
-import { loginUserService, registerUserService } from "./auth.service";
-import { validateLogin, validateRegister } from "./auth.validation";
+import { loginUserService, registerUserService } from "./auth.service.js";
+import { validateLogin, validateRegister } from "./auth.validation.js";
 
 
 export const registerUser = async (req, res) => {
@@ -22,7 +22,8 @@ export const loginUser = async (req, res) => {
 
         const result = await loginUserService(req.body);
         res.json(result);
-    } catch (error) {
-        res.status(401).json({ message: error.message });
+    } catch (err) {
+        console.log(err)
+        res.status(401).json({ message: err.message });
     }
 };
