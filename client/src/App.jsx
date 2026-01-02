@@ -2,7 +2,9 @@ import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import { AuthProvider } from "./store/AuthContext";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { PrivateRoute } from "./guards/AuthGuard";
-import Login from "./features/auth/login.jsx";
+import Login from "./features/auth/Login.jsx";
+import Chat from "./features/chat/Chat.jsx";
+import Admin from "./features/admin/Admin.jsx";
 
 const theme = createTheme({
   palette: {
@@ -24,7 +26,7 @@ const App = () => {
               path="/"
               element={
                 <PrivateRoute>
-                  <p>Chat</p>
+                  <Chat />
                 </PrivateRoute>
               }
             />
@@ -32,7 +34,7 @@ const App = () => {
               path="/admin"
               element={
                 <PrivateRoute adminOnly>
-                  <p>Admin</p>
+                  <Admin />
                 </PrivateRoute>
               }
             />
