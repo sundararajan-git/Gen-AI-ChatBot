@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import cors from "cors"
 import connectDB from "./config/db.js"
 import AuthRoutes from "./modules/auth/auth.routes.js"
+import ChatRoutes from "./modules/chat/chat.routes.js"
 
 
 dotenv.config()
@@ -16,6 +17,7 @@ app.use(express.json())
 
 
 app.use('/api/auth', AuthRoutes)
+app.use('/api/chat', ChatRoutes)
 
 
 app.get("/", (req, res) => {
