@@ -1,5 +1,5 @@
-import GoogleGenAI from "@google/genai"
-import DocumentChunk from "@google/genai"
+import { GoogleGenAI } from "@google/genai"
+import { DocumentChunk } from "../modules/documentChunks/documentChunk.model.js"
 
 
 export const searchKnowledgeBase = async (query) => {
