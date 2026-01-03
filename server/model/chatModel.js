@@ -6,7 +6,8 @@ const ChatSchema = new Schema({
     question: { type: String, required: true },
     answer: { type: String, required: true },
     contextUsed: [{ type: Schema.Types.ObjectId, ref: 'DocumentChunk' }],
-    feedback: { type: String, enum: ["thumbs_up", "thumbs_down"], default: null }
+    feedback: { type: String, enum: ["thumbs_up", "thumbs_down"], default: null },
+    suggestions: [{ type: String }] // Store quick replies for history persistence
 }, { timestamps: true })
 
 

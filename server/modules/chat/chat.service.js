@@ -11,28 +11,32 @@ export const askQuestionService = async (userId, question) => {
 
     const contextChunks = await searchKnowledgeBase(question)
 
-    const answer = await generateAnswer(question, contextChunks)
+    const aiResponse = await generateAnswer(question, contextChunks)
+
+    const answerText = aiResponse.answer || "No answer generated";
 
     const chat = await Chat.create({
         userId,
         question,
-        answer,
+        answer: answerText,
+        suggestions: aiResponse.suggestions || [],
         contextUsed: contextChunks.map(c => c._id)
     })
 
     return {
-        answer,
+        answer: answerText,
+        suggestions: aiResponse.suggestions || [],
         logsId: chat._id,
         contextSources: contextChunks.map(c => c._id)
     };
 }
 
 export const submitFeedbackService = async (logId, rating) => {
-    await Chat.findByIdAndUpdate(logId, { rating })
+    await Chat.findByIdAndUpdate(logId, { feedback: rating })
 }
 
 export const getUserHistoryService = async (userId) => {
-    return ChatLog.find({ userId }).sort({ createdAt: -1 });
+    return Chat.find({ userId }).sort({ createdAt: -1 });
 }
 
 export const getAdminStatsService = async () => {

@@ -5,12 +5,26 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (userInfo) {
-      setUser(userInfo);
-    }
+    const checkUser = async () => {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+      if (userInfo && userInfo.token) {
+        try {
+          const { data } = await api.get("/auth/me");
+          setUser({ ...data, token: userInfo.token }); 
+        } catch (error) {
+          console.error("Session expired or invalid:", error);
+          localStorage.removeItem("userInfo");
+          setUser(null);
+        }
+      }
+      setLoading(false);
+    };
+
+    checkUser();
   }, []);
 
   const login = async (username, password) => {
@@ -35,7 +49,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

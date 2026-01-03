@@ -27,3 +27,17 @@ export const loginUser = async (req, res) => {
         res.status(401).json({ message: err.message });
     }
 };
+
+
+export const checkUser = async (req, res) => {
+    if (req.user) {
+        res.json({
+            _id: req.user._id,
+            username: req.user.username,
+            role: req.user.role,
+            token: req.headers.authorization.split(' ')[1]
+        });
+    } else {
+        res.status(404).json({ message: "User not found" });
+    }
+};

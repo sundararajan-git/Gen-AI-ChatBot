@@ -8,7 +8,7 @@ const upload = multer({ dest: "uploads/" })
 
 router.post("/upload", protect, admin, upload.single("file"), uploadDocument)
 router.get("/", protect, admin, getDocuments)
-router.delete("/upload", protect, admin, deleteDocument)
+router.delete("/:id", protect, admin, deleteDocument)
 
 
 export default router

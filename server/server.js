@@ -12,7 +12,7 @@ connectDB()
 const app = express()
 const PORT = process.env.PORT
 
-// middlewares
+
 app.use(cors())
 app.use(express.json())
 

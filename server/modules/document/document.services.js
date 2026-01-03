@@ -1,17 +1,22 @@
 import fs from "fs"
-import { PDFParse } from "pdf-parse"
 import { Document } from "../../model/documentModel.js"
 import { DocumentChunk } from "../../model/documentChunkModel.js"
 import { splitTextIntoChunks } from "../../utils/textSplitter.js"
-
+import PDFParser from "pdf2json";
 
 const parseFileContent = async (file) => {
     const { originalname, path, mimetype } = file;
 
     if (mimetype === 'application/pdf' || originalname.endsWith('.pdf')) {
-        const dataBuffer = fs.readFileSync(path);
-        const data = await PDFParse(dataBuffer);
-        return data.text;
+        return new Promise((resolve, reject) => {
+            const pdfParser = new PDFParser(this, 1);
+            pdfParser.on("pdfParser_dataError", errData => reject(new Error(errData.parserError)));
+            pdfParser.on("pdfParser_dataReady", pdfData => {
+                const rawText = pdfParser.getRawTextContent();
+                resolve(rawText);
+            });
+            pdfParser.loadPDF(path);
+        });
     }
 
     if (
