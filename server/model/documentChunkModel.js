@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose"
+import mongoose, { model, Schema } from "mongoose"
 
 
 const DocumentChunkSchema = new Schema({
@@ -11,4 +11,4 @@ const DocumentChunkSchema = new Schema({
 DocumentChunkSchema.index({ content: 'text' });
 
 
-export const DocumentChunk = model("DocumentChunk", DocumentChunkSchema)
+export const DocumentChunk = mongoose.models.DocumentChunk || model("DocumentChunk", DocumentChunkSchema);

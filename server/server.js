@@ -4,6 +4,7 @@ import cors from "cors"
 import connectDB from "./config/db.js"
 import AuthRoutes from "./modules/auth/auth.routes.js"
 import ChatRoutes from "./modules/chat/chat.routes.js"
+import DocsRoutes from "./modules/document/document.routes.js"
 
 
 dotenv.config()
@@ -18,6 +19,7 @@ app.use(express.json())
 
 app.use('/api/auth', AuthRoutes)
 app.use('/api/chat', ChatRoutes)
+app.use('/api/docs', DocsRoutes)
 
 
 app.get("/", (req, res) => {

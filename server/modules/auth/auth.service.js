@@ -1,4 +1,4 @@
-import { User } from "./auth.model.js"
+import { User } from "../../model/authModel.js"
 import bcrypt from "bcryptjs"
 import { generateJwtToken } from "../../utils/generateToken.js"
 
@@ -26,9 +26,13 @@ export const registerUserService = async ({ username, password, role }) => {
 export const loginUserService = async ({ username, password }) => {
     const user = await User.findOne({ username });
 
+    if (!user) {
+        throw new Error('user not found !');
+    }
+
     const correctPassword = await bcrypt.compare(password, user.password);
 
-    if (!user || !correctPassword) {
+    if (!correctPassword) {
         throw new Error('Invalid username or password');
     }
 

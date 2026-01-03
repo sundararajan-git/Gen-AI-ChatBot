@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai"
-import { DocumentChunk } from "../modules/documentChunks/documentChunk.model.js"
+import { DocumentChunk } from "../model/documentChunkModel.js"
 
 
 export const searchKnowledgeBase = async (query) => {
@@ -32,7 +32,6 @@ export const generateAnswer = async (question, contextChunks) => {
         return "I'm sorry, I don't have enough information in my knowledge base to answer that.";
     }
     const contextText = contextChunks.map(c => c.content).join("\n---\n");
-    console.log(contextText)
 
     const prompt = `You are an AI assistant for employee onboarding. 
                     You must answer the user's question using ONLY the provided context snippets below.
@@ -56,12 +55,11 @@ export const generateAnswer = async (question, contextChunks) => {
 
         const result = await ai.models.generateContent({
             model: "models/gemini-2.5-flash",
+            // model: "models/gemini-1.5-flash",
             contents: [
                 { role: "user", parts: [{ text: prompt }] },
             ],
         })
-
-        console.log(result)
 
         if (result.candidates && result.candidates.length > 0) {
             return result.candidates[0].content.parts[0].text;

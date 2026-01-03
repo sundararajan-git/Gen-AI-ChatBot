@@ -1,4 +1,4 @@
-import { Chat } from "./chat.model.js"
+import { Chat } from "../../model/chatModel.js"
 import { searchKnowledgeBase, generateAnswer } from '../../services/genAI.js'
 
 
